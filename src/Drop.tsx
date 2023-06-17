@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Text, Group, Button, createStyles, rem } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconCloudUpload, IconX, IconDownload } from '@tabler/icons-react';
+import axios from 'axios';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -32,34 +33,19 @@ export function Drop() {
   const openRef = useRef<() => void>(null);
   const [fileContent, setFileContent] = useState<string | undefined>(undefined);
   
-const handleDrop = async (acceptedFiles: File[]) => {
-  const file = acceptedFiles[0];
+  const handleDrop = async (acceptedFiles:File[]) => {
+    const file = acceptedFiles[0];
 
-  try {
-    const fileContent = await readFileContent(file);
-    setFileContent(fileContent as string);
-    console.log(fileContent)
-  } catch (error) {
-    console.error('Error reading file:', error);
-  }
-};
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
 
-const readFileContent = (file: File) => {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = (event) => {
-      const content = event.target?.result as string;
-      resolve(content);
-    };
-
-    reader.onerror = (event) => {
-      reject(event.target?.error);
-    };
-
-    reader.readAsText(file);
-  });
-};
+      const response = await axios.post('http://127.0.0.1:5000/upload', formData);
+      console.log(response.data); 
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
 
 
   return (
