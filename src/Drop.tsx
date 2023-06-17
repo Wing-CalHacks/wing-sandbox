@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Text, Group, Button, createStyles, rem } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconCloudUpload, IconX, IconDownload } from '@tabler/icons-react';
@@ -26,15 +26,47 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+
 export function Drop() {
   const { classes, theme } = useStyles();
   const openRef = useRef<() => void>(null);
+  const [fileContent, setFileContent] = useState<string | undefined>(undefined);
+  
+const handleDrop = async (acceptedFiles: File[]) => {
+  const file = acceptedFiles[0];
+
+  try {
+    const fileContent = await readFileContent(file);
+    setFileContent(fileContent as string);
+    console.log(fileContent)
+  } catch (error) {
+    console.error('Error reading file:', error);
+  }
+};
+
+const readFileContent = (file: File) => {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const content = event.target?.result as string;
+      resolve(content);
+    };
+
+    reader.onerror = (event) => {
+      reject(event.target?.error);
+    };
+
+    reader.readAsText(file);
+  });
+};
+
 
   return (
     <div className={classes.wrapper}>
       <Dropzone
         openRef={openRef}
-        onDrop={() => {}}
+        onDrop={(file)=>{handleDrop(file)}}
         className={classes.dropzone}
         radius="md"
         accept={[MIME_TYPES.pdf]}
