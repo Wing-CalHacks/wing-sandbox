@@ -58,8 +58,12 @@ const AnalyticsView = () => {
 
   const handleChange = (event: SelectChangeEvent<string>) => {
     setAge(event.target.value);
+    // create a button 'boost' for each product in the product list and display it
     // TODO: Fetch data based on the selected value
   };
+
+  
+
 
   useEffect(() => {
     fetchProductList();
@@ -102,9 +106,10 @@ const AnalyticsView = () => {
               ))}
             </Select>
           </FormControl>
-          <BoostButton variant="contained" color="primary">
+          <BoostButton variant="contained" color="primary" onClick={() => alert("Product boosted!")}>
             BOOST
           </BoostButton>
+          
         </SelectionContainer>
       </Container>
     </ThemeProvider>

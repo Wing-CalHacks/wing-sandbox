@@ -22,14 +22,11 @@ const OnboardingView: React.FC = () => {
         <div className={`circle ${currentPage === 2 ? 'active' : ''}`}>2</div>
         <div className="line" />
         <div className={`circle ${currentPage === 3 ? 'active' : ''}`}>3</div>
-        <div className="line" />
-        <div className={`circle ${currentPage === 4 ? 'active' : ''}`}>4</div>
       </div>
       <div className="content-container">
         {currentPage === 1 && <FirstPage handleContinue={handleContinue} />}
-        {currentPage === 2 && <SecondPage handleContinue={handleContinue} />}
-        {currentPage === 3 && <ThirdPage handleContinue={handleContinue} />}
-        {currentPage === 4 && <FourthPage handleContinue={handleContinue} />}
+        {currentPage === 2 && <ThirdPage handleContinue={handleContinue} />}
+        {currentPage === 3 && <FourthPage handleContinue={handleContinue} />}
       </div>
     </div>
   );
