@@ -8,6 +8,7 @@
     "@mantine/dropzone": "^6.0.13",
     "@mantine/ds": "^6.0.13",
     "@mantine/hooks": "^6.0.13",
+    "@material-ui/core": "^4.12.4",
     "@supabase/supabase-js": "^2.25.0",
     "@tabler/icons-react": "^2.22.0",
     "@testing-library/jest-dom": "^5.16.5",
