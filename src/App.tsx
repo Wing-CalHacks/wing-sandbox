@@ -21,6 +21,8 @@ import Workshop from "./Workshop";
 import Data from "./Data";
 import OnboardingView from "./Onboarding";
 import Drop from "./Drop";
+import AnalyticsView from "./Analytics";
+
 
 interface MainLinkProps {
   icon: React.ReactNode;
@@ -48,7 +50,7 @@ function App() {
       case "Create":
         return <OnboardingView />;
       case "Analytics":
-        return <div>test2</div>;
+        return <AnalyticsView />;
       default:
         return <Workshop />;
     }
