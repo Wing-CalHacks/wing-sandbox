@@ -18,10 +18,12 @@ const Chat: React.FC = () => {
   async function queryLLM(message: string): Promise<any> {
     const Req = {
       query_string: message,
+      temperature: 0.3,
+      profile: "student in a cold city who is athletic"
     };
     console.log(Req.query_string);
     try {
-      const response = await axios.post("http://127.0.0.1:5000/query", Req);
+      const response = await axios.post("http://127.0.0.1:9000/query", Req);
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -42,9 +44,8 @@ const Chat: React.FC = () => {
 
       const res = await queryLLM(userMessage);
       console.log(res);
-      const styledResponse = res.replace(/(\[link\d+\])/g, '<span class="highlighted-link">$1</span>');
 
-      setMessages((prevMessages) => [...prevMessages, styledResponse]);
+      setMessages((prevMessages) => [...prevMessages, res]);
       setIsLoading(false);
       return res;
     }
@@ -64,7 +65,7 @@ const Chat: React.FC = () => {
   }, [messages]);
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div style={{ display: "flex", justifyContent: "start", alignItems: "center", height: "70vh", paddingTop: "15%" }}>
       <div
         style={{
           height: "95vh",
@@ -77,6 +78,7 @@ const Chat: React.FC = () => {
           boxShadow:
             "0 0 10px rgba(255, 255, 255, 0.5)" /* Lighter drop shadow */,
           backgroundColor: "#141414",
+          marginBottom: "1rem",
         }}
       >
         <div
@@ -115,6 +117,12 @@ const Chat: React.FC = () => {
             />
           )}
         </div>
+      </div>
+      <div style={{ textAlign: "center", margin: "2rem 2rem"}}>
+        <h2>Welcome to your sandbox!</h2>
+        <p style={{ margin: "1.5rem 0" }}>
+          Chat freely with the chatbot to engage in conversations to evaluate the effectiveness of the chatbot's understanding of your provided data.
+        </p>
       </div>
     </div>
   );

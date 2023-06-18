@@ -3,78 +3,81 @@ import './OnboardingView.css'; // Import the CSS file for styling
 import Drop from './Drop';
 import Customize from './Customize';
 import Complete from './Complete';
+import { Text, Group, Button, createStyles, rem } from "@mantine/core";
 
+const useStyles = createStyles((theme) => ({
+  onboardingContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    position: 'relative',
+  },
+
+  submitButton: {
+    position: 'absolute',
+    bottom: rem(20),
+    right: rem(20),
+    borderRadius: rem(8),
+    padding: `${rem(12)} ${rem(30)}`,
+    backgroundColor: theme.colors.blue[5],
+    color: theme.colors.white,
+    fontWeight: 500,
+    fontSize: 14,
+    cursor: 'pointer',
+  },
+}));
 const OnboardingView: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+   const { classes } = useStyles();
 
-  const handleContinue = () => {
-    if (currentPage < 4) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
 
   return (
     <div className="onboarding-container">
-    <h2 className="header">Configure your chatbot</h2> {/* New header element */}
-      <div className="circle-container">
-        <div className={`circle ${currentPage === 1 ? 'active' : ''}`}>1</div>
-        <div className="line" />
-        <div className={`circle ${currentPage === 2 ? 'active' : ''}`}>2</div>
-        <div className="line" />
-        <div className={`circle ${currentPage === 3 ? 'active' : ''}`}>3</div>
+      <div className="header-row">
+        <div className="header-container">
+          <div className="header-col">
+            <h1>Upload Product Inventory</h1>
+            <h4>Import and update your product inventory by uploading CSV, PDF, or other supported file formats.</h4>
+          </div>
+        </div>
+        <div className="header-container">
+          <div className="header-col">
+            <h1>Configure Temperature</h1>
+            <h4>Adjust the temperature setting to control the creativity and unpredictability of conversations.</h4>
+          </div>
+        </div>
+        <div className="header-container">
+          <div className="header-col">
+            <h1>Describe Test User</h1>
+            <h4>Provide a detailed description of the target user to test the chatbot from their perspective. Consider demographics, needs, and expectations.</h4>
+          </div>
+        </div>
       </div>
-      <div className="content-container">
-        {currentPage === 1 && <FirstPage handleContinue={handleContinue} />}
-        {currentPage === 2 && <ThirdPage handleContinue={handleContinue} />}
-        {currentPage === 3 && <FourthPage handleContinue={handleContinue} />}
+      <div className="module-row">
+        <div className="module-wrapper">
+          <div className="module">
+            <Drop />
+          </div>
+        </div>
+        <div className="separator"></div>
+        <div className="module-wrapper">
+          <div className="module">
+            <Customize />
+          </div>
+        </div>
+        <div className="separator"></div>
+        <div className="module-wrapper">
+          <div className="module">
+            <Complete />
+          </div>
+        </div>
+
       </div>
     </div>
   );
 };
 
-interface PageProps {
-  handleContinue: () => void;
-}
 
-const FirstPage: React.FC<PageProps> = ({ handleContinue }) => {
-  return (
-    <div className="page-content">
-      <div><Drop /></div>
-      <button className="continue-button" onClick={handleContinue}>
-        Continue
-      </button>
-    </div>
-  );
-};
 
-const SecondPage: React.FC<PageProps> = ({ handleContinue }) => {
-  return (
-    <div className="page-content">
-      <div><Drop /></div>
-      <button className="continue-button" onClick={handleContinue}>
-        Continue
-      </button>
-    </div>
-  );
-};
 
-const ThirdPage: React.FC<PageProps> = ({ handleContinue }) => {
-  return (
-    <div className="page-content">
-      <div><Customize /></div>
-      <button className="continue-button" onClick={handleContinue}>
-        Continue
-      </button>
-    </div>
-  );
-};
-
-const FourthPage: React.FC<PageProps> = ({ handleContinue }) => {
-  return (
-    <div className="page-content">
-      <div><Complete /></div>
-    </div>
-  );
-};
 
 export default OnboardingView;

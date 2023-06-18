@@ -1,20 +1,50 @@
-import React from 'react';
-import { Button, Divider, Paper, Typography } from '@material-ui/core';
+import React from "react";
+import { Button, Divider, Paper, Typography } from "@material-ui/core";
+import { Text, Group, createStyles, rem } from "@mantine/core";
+
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    position: "relative",
+    marginBottom: rem(20),
+  },
+  header: {
+    marginBottom: rem(10),
+    textAlign: "center", // Center the text
+  },
+  paragraph: {
+    textAlign: "center", // Center the text
+  },
+  dropzone: {
+    borderWidth: rem(1),
+    paddingBottom: rem(50),
+  },
+  icon: {
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[3]
+        : theme.colors.gray[4],
+  },
+  control: {
+    position: "absolute",
+    width: rem(250),
+    left: `calc(50% - ${rem(125)})`,
+    bottom: rem(-20),
+  },
+}));
+
 
 const Complete = () => {
+  const { classes, theme } = useStyles();
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Button variant="contained" color="primary" style={{ borderRadius: '50px', marginBottom: '1rem' }}>
-        Launch Live Demo
-      </Button>
-      <Divider style={{ width: '100%' }} />
-      <Button variant="contained" color="secondary" style={{ borderRadius: '50px', margin: '1rem 0' }}>
-        Open Sandbox
-      </Button>
-      <Divider style={{ width: '100%' }} />
-      <Paper style={{ padding: '1rem', margin: '1rem 0', borderRadius: '5px' }}>
-        <Typography variant="body1">&lt;html&gt;&lt;/html&gt;</Typography>
-      </Paper>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <div className="customize-element">
+        <div className="customize-header">
+        </div>
+        <textarea className="customize-text-field"></textarea>
+      </div>
     </div>
   );
 };

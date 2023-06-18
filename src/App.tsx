@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Navbar, MantineProvider } from "@mantine/core";
+import { Navbar, MantineProvider, createStyles } from "@mantine/core";
 import {
   IconMessages,
   IconDatabase,
   IconSettings,
   IconPlus,
   IconAnalyze,
+  IconLiveView,
 } from "@tabler/icons-react";
 import { ThemeIcon, UnstyledButton, Text } from "@mantine/core";
 import {
@@ -15,6 +16,7 @@ import {
   Box,
   rem,
   ColorSchemeProvider,
+  Button
 } from "@mantine/core";
 
 import Workshop from "./Workshop";
@@ -34,13 +36,38 @@ const data = [
   { icon: <IconMessages size="1rem" />, color: "violet", label: "Workshop" },
   { icon: <IconPlus size="1rem" />, color: "yellow", label: "Create" },
   { icon: <IconAnalyze size="1rem" />, color: "red", label: "Analytics" },
+  {icon: <IconLiveView size="1rem" />, color: "blue", label: "Live View"}
 ];
+const useStyles = createStyles((theme) => ({
+  onboardingContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    position: 'relative',
+  },
 
+  submitButton: {
+    position: 'absolute',
+    bottom: rem(20),
+    right: rem(20),
+    borderRadius: rem(8),
+    padding: `${rem(12)} ${rem(30)}`,
+    backgroundColor: theme.colors.blue[5],
+    color: theme.colors.white,
+    fontWeight: 500,
+    fontSize: 14,
+    cursor: 'pointer',
+  },
+}));
 function App() {
   const [selectedLink, setSelectedLink] = useState(""); // State to keep track of the selected link
+     const { classes } = useStyles();
 
   const handleLinkClick = (label: string) => {
     setSelectedLink(label);
+  };
+      const handleSubmit = () => {
+        setSelectedLink("Workshop")
   };
 
   const renderComponent = () => {
@@ -48,9 +75,13 @@ function App() {
       case "Workshop":
         return <Workshop />;
       case "Create":
-        return <OnboardingView />;
+      return <div><OnboardingView /><Button className={classes.submitButton} onClick={handleSubmit}>Create</Button>
+</div>;
       case "Analytics":
         return <AnalyticsView />;
+      case "Live View":
+        window.open("http://127.0.0.1:5000");
+        return null;
       default:
         return <Workshop />;
     }
