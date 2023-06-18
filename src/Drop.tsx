@@ -74,7 +74,7 @@ export function Drop() {
         }}
         className={classes.dropzone}
         radius="md"
-        accept={[MIME_TYPES.pdf]}
+        accept={[MIME_TYPES.pdf, MIME_TYPES.csv]}
         maxSize={30 * 1024 ** 2}
       >
                 

@@ -53,11 +53,12 @@ const Chat: React.FC = () => {
 
       // Simulating chatbot response
       const res = await queryLLM(userMessage);
-      console.log(res)
-      
-      setMessages((prevMessages) => [...prevMessages, res]);
+      console.log(res);
+      const styledResponse = res.replace(/(\[link\d+\])/g, '<span class="highlighted-link">$1</span>');
+
+      setMessages((prevMessages) => [...prevMessages, styledResponse]);
       setIsLoading(false);
-      
+      return res;
     }
   }
 
@@ -93,6 +94,8 @@ const Chat: React.FC = () => {
           <Container size="lg">
             {messages.map((message, index) => (
               <Message key={index} content={message} isUser={index % 2 === 0} />
+            
+              
             ))}
           </Container>
         </div>
